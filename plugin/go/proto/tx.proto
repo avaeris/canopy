@@ -39,6 +39,43 @@ message MessageSend {
   uint64 amount = 3;
 }
 
+// MessageReward is a minting transaction that creates new tokens for a recipient
+// Only an admin can mint new tokens and must pay a fee for this privilege
+message MessageReward {
+  // admin_address: is the admin who authorizes the reward minting
+  bytes admin_address = 1; // @gotags: json:"adminAddress"
+  // recipient_address: is the recipient of the newly minted tokens
+  bytes recipient_address = 2; // @gotags: json:"recipientAddress"
+  // amount: is the amount of tokens to mint in micro-denomination (uARC)
+  uint64 amount = 3;
+}
+
+// MessageStake is a transaction that locks tokens into a staking pool
+// Staked tokens are removed from the sender's balance and tracked in the stake state
+message MessageStake {
+  // sender_address: is the address of the account staking tokens
+  bytes sender_address = 1; // @gotags: json:"senderAddress"
+  // amount: is the amount of tokens to stake in micro-denomination (uARC)
+  uint64 amount = 2;
+}
+
+// MessageUnstake is a transaction that removes tokens from the staking pool
+// Unstaked tokens are returned to the sender's balance and removed from stake state
+message MessageUnstake {
+  // sender_address: is the address of the account unstaking tokens
+  bytes sender_address = 1; // @gotags: json:"senderAddress"
+  // amount: is the amount of tokens to unstake in micro-denomination (uARC)
+  uint64 amount = 2;
+}
+
+// Stake represents the staking information for an account
+message Stake {
+  // address: is the staker's address
+  bytes address = 1; // @gotags: json:"address"
+  // amount: is the total amount of staked tokens in micro-denomination (uARC)
+  uint64 amount = 2; // @gotags: json:"amount"
+}
+
 // FeeParams is the parameter space that defines various amounts for transaction fees
 message FeeParams {
   // send_fee: is the fee amount (in uCNPY) for Message Send
